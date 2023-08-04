@@ -147,7 +147,7 @@ void usercontrol(void) {
 
         right_motor_group.setVelocity(controller_1.Axis2.position(), percent);
 
-
+ 
         topmotor.setVelocity(30, percent);
 
         if (controller_1.ButtonR1.pressing() == true){
