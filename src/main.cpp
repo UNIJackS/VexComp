@@ -41,7 +41,7 @@ motor_group right_motor_group = motor_group(right_motor_back,right_motor_front);
 //-----------A,B,X & Y buttons-----------------------------
 
 void ControllerButtonAPressed(void){
-	Brain.Screen.drawImageFromFile("wink.png",0,0);
+	brain_1.Screen.drawImageFromFile("wink.png",0,0);
 };
 void ControllerButtonBPressed(void){
 };
@@ -235,7 +235,7 @@ int main() {
 
   // Cute Face ^.^
   bool blink = false;
-  Brain.Screen.drawImageFromFile("normal.png");
+  brain_1.Screen.drawImageFromFile("normal.png");
 
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
@@ -246,10 +246,10 @@ int main() {
   // Prevent main from exiting with an infinite loop.
   while (true) {
     if (blink) { // javascript syntax (no further comment)
-	Brain.Screen.drawImageFromFile("blink.png",0,0);
+	brain_1.Screen.drawImageFromFile("blink.png",0,0);
 	blink = false;
     } else {
-	brain.Screen.drawImageFromFile("normal.png",0,0);
+	brain_1.Screen.drawImageFromFile("normal.png",0,0);
 	blink = true;
     }
     wait(100, msec);
