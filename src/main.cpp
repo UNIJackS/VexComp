@@ -144,13 +144,12 @@ void autonomous(void) {
     // Commands for moving autonomusly go here
     //..........................................................................
 
-    auto_drive_train.driveFor(forward,848,mm,true);
-
     //moves forward to the diagonal tile
-    auto_drive_train.driveFor(forward,848,mm,true);
+    //906 is math perfect 
+    auto_drive_train.driveFor(forward,950,mm,true);
 
     //
-    auto_drive_train.turnFor(-25.53,deg,true);
+    auto_drive_train.turnFor(-64.66,deg,true);
 
     auto_drive_train.driveFor(reverse,200,mm,true);
 
@@ -158,7 +157,7 @@ void autonomous(void) {
 
     topmotor.spinFor(2,seconds);
 
-    auto_drive_train.driveFor(forward,257,mm,true);
+    auto_drive_train.driveFor(forward,400,mm,true);
 
 
 
@@ -234,8 +233,6 @@ int main() {
   // Set up callbacks for autonomous and driver control periods.
 
   // Cute Face ^.^
-  bool blink = false;
-  brain_1.Screen.drawImageFromFile("normal.png");
 
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
@@ -245,13 +242,6 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    if (blink) { // javascript syntax (no further comment)
-	brain_1.Screen.drawImageFromFile("blink.png",0,0);
-	blink = false;
-    } else {
-	brain_1.Screen.drawImageFromFile("normal.png",0,0);
-	blink = true;
-    }
     wait(100, msec);
   }
 }
