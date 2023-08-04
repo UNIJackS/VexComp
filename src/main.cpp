@@ -41,69 +41,44 @@ motor_group right_motor_group = motor_group(right_motor_back,right_motor_front);
 //-----------A,B,X & Y buttons-----------------------------
 
 void ControllerButtonAPressed(void){
-    brain_1.Screen.printAt(10, 20, "A button pressed !!!" );
-    printf("A button pressed !!!\n");
     //topmotor.setVelocity(10, percent);
     //topmotor.spin(forward);
 };
 void ControllerButtonBPressed(void){
-    brain_1.Screen.printAt(10, 20, "B button pressed !!!" );
-    printf("B button pressed !!!\n");
     //topmotor.setVelocity(0, percent);
     //topmotor.spin(forward);
 };
 void ControllerButtonXPressed(void){
-    brain_1.Screen.printAt(10, 20, "X buAtton pressed !!!" );
-    printf("X button pressed !!!\n");
     //topmotor.setVelocity(10, percent);
     //topmotor.spin(reverse);
 };
 void ControllerButtonYPressed(void){
-    brain_1.Screen.printAt(10, 20, "Y button pressed !!!" );
-    printf("Y button pressed !!!\n");
 };
 //-----------Bumper buttons--------------------------------
 
 void ControllerButtonL1Pressed(void){
-    brain_1.Screen.printAt(10, 20, "L1 button pressed !!!" );
-    printf("L1 button pressed !!!");
 };
 void ControllerButtonL2Pressed(void){
-    brain_1.Screen.printAt(10, 20, "L2 button pressed !!!" );
-    printf("L2 button pressed !!!");
 };
 void ControllerButtonR1Pressed(void){
-    brain_1.Screen.printAt(10, 20, "R1 button pressed !!!" );
-    printf("R1 button pressed !!!");
 };
 void ControllerButtonR2Pressed(void){
-    brain_1.Screen.printAt(10, 20, "R2 button pressed !!!" );
-    printf("R2 button pressed !!!");
 };
 //-----------Up,Down,<,> buttons---------------------------
 
 void ControllerButtonUpPressed(void){
-    brain_1.Screen.printAt(10, 20, "Up button pressed !!!" );
-    printf("Up button pressed !!!");
 };
 void ControllerButtonDownPressed(void){
-    brain_1.Screen.printAt(10, 20, "Down button pressed !!!" );
-    printf("Down button pressed !!!");
 };
 void ControllerButtonLeftPressed(void){
-    brain_1.Screen.printAt(10, 20, "Left button pressed !!!" );
-    printf("Left button pressed !!!");
 };
 void ControllerButtonRightPressed(void){
-    brain_1.Screen.printAt(10, 20, "Right button pressed !!!" );
-    printf("Right button pressed !!!");
 };
 
 //Setsup the callback events for each button on the contorller
 //these are the functions that will be called when each button is pressed
 //The functions are in a seperate object which is created from the the class above
 void CallBackSetup(){
-    printf("Call Back Setup function called...");
     //callback functions for A,B,X and Y buttons
     controller_1.ButtonA.pressed(ControllerButtonAPressed);
     controller_1.ButtonB.pressed(ControllerButtonBPressed);
@@ -121,7 +96,6 @@ void CallBackSetup(){
     controller_1.ButtonDown.pressed(ControllerButtonDownPressed);
     controller_1.ButtonLeft.pressed(ControllerButtonLeftPressed);
     controller_1.ButtonRight.pressed(ControllerButtonRightPressed);
-    printf("Call back setup function compleated");
 
 }
 /*---------------------------------------------------------------------------*/
