@@ -22,15 +22,18 @@ controller Controller1 = controller(primary);
 // A global instance of vex::brain used for printing to the V5 brain screen
 brain Brain;
 
-motor LeftMotorBack = motor(PORT1, ratio18_1, false);
-motor LeftMotorFront = motor(PORT2, ratio18_1, false);
-motor RightMotorBack = motor(PORT10, ratio18_1, false);
-motor RightMotorFront = motor(PORT9, ratio18_1, false);
+
+// Motor definations 
+motor left_motor_back = motor(PORT1, ratio18_1, false);
+motor left_motor_front = motor(PORT2, ratio18_1, false);
+motor right_motor_back = motor(PORT10, ratio18_1, false);
+motor right_motor_front = motor(PORT9, ratio18_1, false);
 
 motor topmotor = motor(PORT3, ratio18_1, false);
 
-motor_group Left_motor_group = motor_group(LeftMotorBack,LeftMotorFront);
-motor_group Right_motor_group = motor_group(RightMotorBack,RightMotorFront);
+// Motor group definitons
+motor_group left_motor_group = motor_group(left_motor_back,left_motor_front);
+motor_group right_motor_group = motor_group(right_motor_back,right_motor_front);
 
 
 
@@ -182,13 +185,13 @@ void usercontrol(void) {
   //calls the CallBackSetup function to setup the button callbacks
   CallBackSetup();
 
-    RightMotorBack.setReversed(true);
-    RightMotorFront.setReversed(true);
+    right_motor_back.setReversed(true);
+    right_motor_front.setReversed(true);
 
     // User control code here, inside the loop
     //left motor, right motor, wheel travel aka wheel circumference, track width aka distance between left and right wheels
     //,wheel base aka distance between front and rear axles, measurment unit, gear ratio 
-    drivetrain auto_drive_train =drivetrain(Left_motor_group,Right_motor_group,319,370,310,mm,1);
+    drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,370,310,mm,1);
 
     //sets the drive trains velocity in percent 
     auto_drive_train.setDriveVelocity(50,percent);
@@ -206,17 +209,17 @@ void usercontrol(void) {
 
     auto_drive_train.driveFor(forward,1000,mm,true);
 
-    RightMotorBack.setReversed(false);
-    RightMotorFront.setReversed(false);
+    right_motor_back.setReversed(false);
+    right_motor_front.setReversed(false);
 
-    LeftMotorBack.setReversed(true);
-    LeftMotorFront.setReversed(true);
+    left_motor_back.setReversed(true);
+    left_motor_front.setReversed(true);
 
     while (1) {
         
-        Left_motor_group.setVelocity(Controller1.Axis3.position(), percent);
+        left_motor_group.setVelocity(Controller1.Axis3.position(), percent);
 
-        Right_motor_group.setVelocity(Controller1.Axis2.position(), percent);
+        right_motor_group.setVelocity(Controller1.Axis2.position(), percent);
 
 
         topmotor.setVelocity(30, percent);
@@ -231,8 +234,8 @@ void usercontrol(void) {
             topmotor.stop();
         }
 
-        Left_motor_group.spin(forward);
-        Right_motor_group.spin(forward);
+        left_motor_group.spin(forward);
+        right_motor_group.spin(forward);
         
         
 
