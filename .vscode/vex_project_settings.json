@@ -1,0 +1,18 @@
+{
+	"extension": {
+		"version": "0.4.2",
+		"json": 1
+	},
+	"project": {
+		"name": "comp_test_2_Jack_S",
+		"description": "same as comp test 1 but with autonomus",
+		"creationDate": "8/1/2023, 5:46:27 PM",
+		"platform": "V5",
+		"language": "cpp",
+		"slot": 7,
+		"sdkVersion": "V5_20220726_10_00_00",
+		"cpp": {
+			"includePath": []
+		}
+	}
+}
