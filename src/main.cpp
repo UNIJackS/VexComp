@@ -90,7 +90,6 @@ void pre_auton(void) {
   
 
   // All activities that occur before the competition starts
-  return;
 }
 
 // Autonomous
@@ -183,4 +182,5 @@ int main() {
   while (true) {
     wait(100, msec);
   }
+  return 0;
 }
