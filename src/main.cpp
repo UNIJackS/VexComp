@@ -266,6 +266,6 @@ int main() {
     brain_1.Screen.drawImageFromFile("normal.png",0,0);
     wait(1000, msec);
     brain_1.Screen.drawImageFromFile("blink.png",0,0);
-    wait(100, msec)
+    wait(100, msec);
   }
 }
