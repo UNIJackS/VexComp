@@ -189,7 +189,7 @@ void usercontrol(void) {
   //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // User control code here, inside the loop
-    while (1) {
+    while (true) {
         
         left_motor_group.setVelocity(controller_1.Axis3.position(), percent);
 
@@ -198,13 +198,11 @@ void usercontrol(void) {
 
         topmotor.setVelocity(50, percent);
 
-        if (controller_1.ButtonR1.pressing() == true){
+        if (controller_1.ButtonR1.pressing()) {
             topmotor.spin(forward);
-        }
-        else if(controller_1.ButtonL1.pressing() == true){
+        } else if(controller_1.ButtonL1.pressing()) {
             topmotor.spin(reverse);
-        }
-        else {
+        } else {
             topmotor.stop();
         }
 
