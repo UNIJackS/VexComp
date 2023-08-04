@@ -1,20 +1,9 @@
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:       main.cpp                                                  */
-/*    Author:       10jac                                                     */
-/*    Created:      5/26/2023, 2:55:52 PM                                     */
-/*    Description:  V5 project                                                */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
-
 #include "vex.h"
 
 using namespace vex;
 
 // A global instance of competition
 competition Competition;
-
-// define your global instances of motors and other devices here
 
 // A global instance of vex::controller used for taking inputs from the controller
 controller controller_1 = controller(primary);
@@ -41,16 +30,10 @@ motor_group right_motor_group = motor_group(right_motor_back,right_motor_front);
 //-----------A,B,X & Y buttons-----------------------------
 
 void ControllerButtonAPressed(void){
-    //topmotor.setVelocity(10, percent);
-    //topmotor.spin(forward);
 };
 void ControllerButtonBPressed(void){
-    //topmotor.setVelocity(0, percent);
-    //topmotor.spin(forward);
 };
 void ControllerButtonXPressed(void){
-    //topmotor.setVelocity(10, percent);
-    //topmotor.spin(reverse);
 };
 void ControllerButtonYPressed(void){
 };
@@ -75,7 +58,7 @@ void ControllerButtonLeftPressed(void){
 void ControllerButtonRightPressed(void){
 };
 
-//Setsup the callback events for each button on the contorller
+//Setup the callback events for each button on the contorller
 //these are the functions that will be called when each button is pressed
 //The functions are in a seperate object which is created from the the class above
 void CallBackSetup(){
@@ -98,15 +81,7 @@ void CallBackSetup(){
     controller_1.ButtonRight.pressed(ControllerButtonRightPressed);
 
 }
-/*---------------------------------------------------------------------------*/
-/*                          Pre-Autonomous Functions                         */
-/*                                                                           */
-/*  You may want to perform some actions before the competition starts.      */
-/*  Do them in the following function.  You must return from this function   */
-/*  or the autonomous and usercontrol tasks will not be started.  This       */
-/*  function is only called once after the V5 has been powered on and        */
-/*  not every time that the robot is disabled.                               */
-/*---------------------------------------------------------------------------*/
+// Pre-Autonomous Functions
 
 void pre_auton(void) {
 
@@ -115,24 +90,12 @@ void pre_auton(void) {
   
 
   // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
-  return;
 }
 
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              Autonomous Task                              */
-/*                                                                           */
-/*  This task is used to control your robot during the autonomous phase of   */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
+// Autonomous
 
 void autonomous(void) {
-    // ..........................................................................
     // Insert autonomous user code here.
-    // ..........................................................................
 
     //creates a drive train object for the autonomus phase
     //left motor, right motor, wheel travel aka wheel circumference, track width aka distance between left and right wheels
@@ -145,9 +108,7 @@ void autonomous(void) {
     //sets the drive trains stopping type
     auto_drive_train.setStopping(brake);
 
-    //..........................................................................
     // Commands for moving autonomusly go here
-    //..........................................................................
     auto_drive_train.driveFor(forward,848,mm,true);
 
     auto_drive_train.turnFor(-45,deg,true);
@@ -171,23 +132,13 @@ void autonomous(void) {
 
 }
 
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              User Control Task                            */
-/*                                                                           */
-/*  This task is used to control your robot during the user control phase of */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
-
+//User Control Task
 void usercontrol(void) {
   //calls the CallBackSetup function to setup the button callbacks
   CallBackSetup();
 
-  //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
   autonomous();
-  //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // User control code here, inside the loop
     while (1) {
@@ -214,23 +165,11 @@ void usercontrol(void) {
         
         
 
-    // This is the main execution loop for the user control program.
-    // Each time through the loop your program should update motor + servo
-    // values based on feedback from the joysticks.
-
-    // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
-    // ........................................................................
-
-    wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
+    wait(20, msec); // Sleep.
   }
 }
 
-//
 // Main will set up the competition functions and callbacks.
-//
 int main() {
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
@@ -243,4 +182,5 @@ int main() {
   while (true) {
     wait(100, msec);
   }
+  return 0;
 }
