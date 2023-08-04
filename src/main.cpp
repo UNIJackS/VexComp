@@ -41,16 +41,11 @@ motor_group right_motor_group = motor_group(right_motor_back,right_motor_front);
 //-----------A,B,X & Y buttons-----------------------------
 
 void ControllerButtonAPressed(void){
-    //topmotor.setVelocity(10, percent);
-    //topmotor.spin(forward);
+	Brain.Screen.drawImageFromFile("wink.png",0,0);
 };
 void ControllerButtonBPressed(void){
-    //topmotor.setVelocity(0, percent);
-    //topmotor.spin(forward);
 };
 void ControllerButtonXPressed(void){
-    //topmotor.setVelocity(10, percent);
-    //topmotor.spin(reverse);
 };
 void ControllerButtonYPressed(void){
 };
@@ -237,6 +232,11 @@ void usercontrol(void) {
 //
 int main() {
   // Set up callbacks for autonomous and driver control periods.
+
+  // Cute Face ^.^
+  bool blink = false;
+  Brain.Screen.drawImageFromFile("normal.png");
+
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
 
@@ -245,6 +245,13 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
+    if (blink) { // javascript syntax (no further comment)
+	Brain.Screen.drawImageFromFile("blink.png",0,0);
+	blink = false;
+    } else {
+	brain.Screen.drawImageFromFile("normal.png",0,0);
+	blink = true;
+    }
     wait(100, msec);
   }
 }
