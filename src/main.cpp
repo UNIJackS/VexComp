@@ -188,7 +188,7 @@ void usercontrol(void) {
   //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // User control code here, inside the loop
-    while (1) {
+    while (true) {
         
         left_motor_group.setVelocity(controller_1.Axis3.position(), percent);
 
@@ -197,13 +197,11 @@ void usercontrol(void) {
 
         topmotor.setVelocity(50, percent);
 
-        if (controller_1.ButtonR1.pressing() == true){
+        if (controller_1.ButtonR1.pressing()) {
             topmotor.spin(forward);
-        }
-        else if(controller_1.ButtonL1.pressing() == true){
+        } else if(controller_1.ButtonL1.pressing()) {
             topmotor.spin(reverse);
-        }
-        else {
+        } else {
             topmotor.stop();
         }
 
@@ -242,6 +240,13 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
+    if (blink) { // javascript syntax (no further comment)
+	brain_1.Screen.drawImageFromFile("blink.png",0,0);
+	blink = false;
+    } else {
+	brain_1.Screen.drawImageFromFile("normal.png",0,0);
+	blink = true;
+    }
     wait(100, msec);
   }
 }
