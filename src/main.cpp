@@ -41,7 +41,6 @@ motor_group right_motor_group = motor_group(right_motor_back,right_motor_front);
 //-----------A,B,X & Y buttons-----------------------------
 
 void ControllerButtonAPressed(void){
-	brain_1.Screen.drawImageFromFile("wink.png",0,0);
 };
 void ControllerButtonBPressed(void){
 };
@@ -144,6 +143,10 @@ void autonomous(void) {
     // Commands for moving autonomusly go here
     //..........................................................................
 
+    //..........................................................................
+    // code for moving to score goal
+    //..........................................................................
+
     //moves forward to the diagonal tile
     //906 is math perfect but 950 works better
     auto_drive_train.driveFor(forward,950,mm,true);
@@ -163,6 +166,9 @@ void autonomous(void) {
 
 
 
+    //..........................................................................
+    // code for moving to poll
+    //..........................................................................
 
     //reverses to allow for turn    
     auto_drive_train.driveFor(reverse,100,mm,true);
@@ -180,19 +186,13 @@ void autonomous(void) {
     auto_drive_train.turnFor(-45,deg,true);
 
     //rams the robot into the poll
-    auto_drive_train.driveFor(forward,424,mm,true);
-
-
-
-
-
-
+    auto_drive_train.driveFor(forward,424,mm,true)
 
 
   //vison test code 
-  vision auto_camera = vision(PORT3);
+  //vision auto_camera = vision(PORT3);
   
-  vision::signature green_obj = vision::signature(1,10,300,140,10,300,140,1,1);
+  //::signature green_obj = vision::signature(1,10,300,140,10,300,140,1,1);
 
 
 }
