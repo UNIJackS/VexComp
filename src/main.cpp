@@ -41,7 +41,6 @@ motor_group right_motor_group = motor_group(right_motor_back,right_motor_front);
 //-----------A,B,X & Y buttons-----------------------------
 
 void ControllerButtonAPressed(void){
-	brain_1.Screen.drawImageFromFile("wink.png",0,0);
 };
 void ControllerButtonBPressed(void){
 };
@@ -72,7 +71,6 @@ void ControllerButtonRightPressed(void){
 
 //Setsup the callback events for each button on the contorller
 //these are the functions that will be called when each button is pressed
-//The functions are in a seperate object which is created from the the class above
 void CallBackSetup(){
     //callback functions for A,B,X and Y buttons
     controller_1.ButtonA.pressed(ControllerButtonAPressed);
@@ -135,7 +133,7 @@ void autonomous(void) {
     drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,370,310,mm,1);
 
     //sets the drive trains velocity in percent 
-    auto_drive_train.setDriveVelocity(50,percent);
+    auto_drive_train.setDriveVelocity(70,percent);
 
     //sets the drive trains stopping type
     auto_drive_train.setStopping(brake);
@@ -144,28 +142,54 @@ void autonomous(void) {
     // Commands for moving autonomusly go here
     //..........................................................................
 
-    auto_drive_train.driveFor(forward,848,mm,true);
-
+    //..........................................................................
+    // code for moving to score goal
+    //..........................................................................
     //moves forward to the diagonal tile
-    auto_drive_train.driveFor(forward,848,mm,true);
+    //906 is math perfect but 950 works better
+    auto_drive_train.driveFor(forward,950,mm,true);
 
-    //
-    auto_drive_train.turnFor(-25.53,deg,true);
+    //turns to face the goal
+    auto_drive_train.turnFor(-64.66,deg,true);
 
-    auto_drive_train.driveFor(reverse,200,mm,true);
+    //reverses to make room for the triball
+    auto_drive_train.driveFor(reverse,150,mm,true);
 
+    //pushes the triball off the top
     topmotor.setVelocity(50, percent);
-
     topmotor.spinFor(2,seconds);
 
-    auto_drive_train.driveFor(forward,257,mm,true);
+    //pushes triball into goal
+    auto_drive_train.driveFor(forward,350,mm,true);
 
+
+
+    //..........................................................................
+    // code for moving to poll
+    //..........................................................................
+    //reverses to allow for turn    
+    auto_drive_train.driveFor(reverse,100,mm,true);
+
+    //turns the robot to the left face the left
+    auto_drive_train.turnFor(-80.5,deg,true);
+
+    //drives the robot to the square infront of the bumper
+    auto_drive_train.driveFor(forward,1216.55,mm,true);
+
+    //reverses to allow for turn 
+    auto_drive_train.driveFor(reverse,100,mm,true);
+
+    //turns the robot to face the climb poll
+    auto_drive_train.turnFor(-45,deg,true);
+
+    //rams the robot into the poll
+    auto_drive_train.driveFor(forward,424,mm,true);
 
 
   //vison test code 
-  vision auto_camera = vision(PORT3);
+  //vision auto_camera = vision(PORT3);
   
-  vision::signature green_obj = vision::signature(1,10,300,140,10,300,140,1,1);
+  //::signature green_obj = vision::signature(1,10,300,140,10,300,140,1,1);
 
 
 }
@@ -184,25 +208,22 @@ void usercontrol(void) {
   //calls the CallBackSetup function to setup the button callbacks
   CallBackSetup();
 
-  //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  autonomous();
-  //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     // User control code here, inside the loop
-    while (true) {
+    while (1) {
         
         left_motor_group.setVelocity(controller_1.Axis3.position(), percent);
-
         right_motor_group.setVelocity(controller_1.Axis2.position(), percent);
 
 
         topmotor.setVelocity(75, percent);
 
-        if (controller_1.ButtonR1.pressing()) {
+        if (controller_1.ButtonR1.pressing() == true){
             topmotor.spin(forward);
-        } else if(controller_1.ButtonL1.pressing()) {
+        }
+        else if(controller_1.ButtonL1.pressing() == true){
             topmotor.spin(reverse);
-        } else {
+        }
+        else {
             topmotor.stop();
         }
 
@@ -232,8 +253,6 @@ int main() {
   // Set up callbacks for autonomous and driver control periods.
 
   // Cute Face ^.^
-  bool blink = false;
-  brain_1.Screen.drawImageFromFile("normal.png");
 
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
@@ -243,12 +262,6 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    if (blink) { // javascript syntax (no further comment)
-	brain_1.Screen.drawImageFromFile("blink.png",0,0);
-    } else {
-	brain_1.Screen.drawImageFromFile("normal.png",0,0);
-    }
-    blink = !blink;
     wait(100, msec);
   }
 }
