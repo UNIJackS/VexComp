@@ -183,7 +183,7 @@ void autonomous(void) {
     auto_drive_train.turnFor(-45,deg,true);
 
     //rams the robot into the poll
-    auto_drive_train.driveFor(forward,424,mm,true)
+    auto_drive_train.driveFor(forward,424,mm,true);
 
 
   //vison test code 
