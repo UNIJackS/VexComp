@@ -183,7 +183,7 @@ void autonomous(void) {
 
     topmotor.setVelocity(50, percent);
 
-    topmotor.spinFor(5,seconds);
+    topmotor.spinFor(2,seconds);
 
     auto_drive_train.driveFor(forward,257,mm,true);
 
@@ -223,7 +223,7 @@ void usercontrol(void) {
         right_motor_group.setVelocity(controller_1.Axis2.position(), percent);
 
 
-        topmotor.setVelocity(30, percent);
+        topmotor.setVelocity(50, percent);
 
         if (controller_1.ButtonR1.pressing() == true){
             topmotor.spin(forward);
