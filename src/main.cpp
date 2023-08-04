@@ -17,10 +17,10 @@ competition Competition;
 // define your global instances of motors and other devices here
 
 // A global instance of vex::controller used for taking inputs from the controller
-controller Controller1 = controller(primary);
+controller controller_1 = controller(primary);
 
 // A global instance of vex::brain used for printing to the V5 brain screen
-brain Brain;
+brain brain_1;
 
 
 // Motor definations 
@@ -41,61 +41,61 @@ motor_group right_motor_group = motor_group(right_motor_back,right_motor_front);
 //-----------A,B,X & Y buttons-----------------------------
 
 void ControllerButtonAPressed(void){
-    Brain.Screen.printAt(10, 20, "A button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "A button pressed !!!" );
     printf("A button pressed !!!\n");
     //topmotor.setVelocity(10, percent);
     //topmotor.spin(forward);
 };
 void ControllerButtonBPressed(void){
-    Brain.Screen.printAt(10, 20, "B button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "B button pressed !!!" );
     printf("B button pressed !!!\n");
     //topmotor.setVelocity(0, percent);
     //topmotor.spin(forward);
 };
 void ControllerButtonXPressed(void){
-    Brain.Screen.printAt(10, 20, "X buAtton pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "X buAtton pressed !!!" );
     printf("X button pressed !!!\n");
     //topmotor.setVelocity(10, percent);
     //topmotor.spin(reverse);
 };
 void ControllerButtonYPressed(void){
-    Brain.Screen.printAt(10, 20, "Y button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "Y button pressed !!!" );
     printf("Y button pressed !!!\n");
 };
 //-----------Bumper buttons--------------------------------
 
 void ControllerButtonL1Pressed(void){
-    Brain.Screen.printAt(10, 20, "L1 button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "L1 button pressed !!!" );
     printf("L1 button pressed !!!");
 };
 void ControllerButtonL2Pressed(void){
-    Brain.Screen.printAt(10, 20, "L2 button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "L2 button pressed !!!" );
     printf("L2 button pressed !!!");
 };
 void ControllerButtonR1Pressed(void){
-    Brain.Screen.printAt(10, 20, "R1 button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "R1 button pressed !!!" );
     printf("R1 button pressed !!!");
 };
 void ControllerButtonR2Pressed(void){
-    Brain.Screen.printAt(10, 20, "R2 button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "R2 button pressed !!!" );
     printf("R2 button pressed !!!");
 };
 //-----------Up,Down,<,> buttons---------------------------
 
 void ControllerButtonUpPressed(void){
-    Brain.Screen.printAt(10, 20, "Up button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "Up button pressed !!!" );
     printf("Up button pressed !!!");
 };
 void ControllerButtonDownPressed(void){
-    Brain.Screen.printAt(10, 20, "Down button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "Down button pressed !!!" );
     printf("Down button pressed !!!");
 };
 void ControllerButtonLeftPressed(void){
-    Brain.Screen.printAt(10, 20, "Left button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "Left button pressed !!!" );
     printf("Left button pressed !!!");
 };
 void ControllerButtonRightPressed(void){
-    Brain.Screen.printAt(10, 20, "Right button pressed !!!" );
+    brain_1.Screen.printAt(10, 20, "Right button pressed !!!" );
     printf("Right button pressed !!!");
 };
 
@@ -105,23 +105,24 @@ void ControllerButtonRightPressed(void){
 void CallBackSetup(){
     printf("Call Back Setup function called...");
     //callback functions for A,B,X and Y buttons
-    Controller1.ButtonA.pressed(ControllerButtonAPressed);
-    Controller1.ButtonB.pressed(ControllerButtonBPressed);
-    Controller1.ButtonX.pressed(ControllerButtonXPressed);
-    Controller1.ButtonY.pressed(ControllerButtonYPressed);
+    controller_1.ButtonA.pressed(ControllerButtonAPressed);
+    controller_1.ButtonB.pressed(ControllerButtonBPressed);
+    controller_1.ButtonX.pressed(ControllerButtonXPressed);
+    controller_1.ButtonY.pressed(ControllerButtonYPressed);
 
     //callback functions for the bumbpers on the front of the controller
-    Controller1.ButtonL1.pressed(ControllerButtonL1Pressed);
-    Controller1.ButtonL2.pressed(ControllerButtonL2Pressed);
-    Controller1.ButtonR1.pressed(ControllerButtonR1Pressed);
-    Controller1.ButtonR2.pressed(ControllerButtonR2Pressed);
+    controller_1.ButtonL1.pressed(ControllerButtonL1Pressed);
+    controller_1.ButtonL2.pressed(ControllerButtonL2Pressed);
+    controller_1.ButtonR1.pressed(ControllerButtonR1Pressed);
+    controller_1.ButtonR2.pressed(ControllerButtonR2Pressed);
 
     //callback functions for the up,donw,left and right arrow buttons
-    Controller1.ButtonUp.pressed(ControllerButtonUpPressed);
-    Controller1.ButtonDown.pressed(ControllerButtonDownPressed);
-    Controller1.ButtonLeft.pressed(ControllerButtonLeftPressed);
-    Controller1.ButtonRight.pressed(ControllerButtonRightPressed);
+    controller_1.ButtonUp.pressed(ControllerButtonUpPressed);
+    controller_1.ButtonDown.pressed(ControllerButtonDownPressed);
+    controller_1.ButtonLeft.pressed(ControllerButtonLeftPressed);
+    controller_1.ButtonRight.pressed(ControllerButtonRightPressed);
     printf("Call back setup function compleated");
+
 }
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -134,8 +135,9 @@ void CallBackSetup(){
 /*---------------------------------------------------------------------------*/
 
 void pre_auton(void) {
-  
 
+    right_motor_back.setReversed(true);
+    right_motor_front.setReversed(true);
   
 
   // All activities that occur before the competition starts
@@ -154,12 +156,36 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  // ..........................................................................
-  // Insert autonomous user code here.
-  // ..........................................................................
-  
-  //creates a drive train object for the autonomus phase
+    // ..........................................................................
+    // Insert autonomous user code here.
+    // ..........................................................................
 
+    //creates a drive train object for the autonomus phase
+    //left motor, right motor, wheel travel aka wheel circumference, track width aka distance between left and right wheels
+    //,wheel base aka distance between front and rear axles, measurment unit, gear ratio 
+    drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,370,310,mm,1);
+
+    //sets the drive trains velocity in percent 
+    auto_drive_train.setDriveVelocity(50,percent);
+
+    //sets the drive trains stopping type
+    auto_drive_train.setStopping(brake);
+
+    //..........................................................................
+    // Commands for moving autonomusly go here
+    //..........................................................................
+    auto_drive_train.driveFor(forward,848,mm,true);
+
+    auto_drive_train.turnFor(-45,deg,true);
+    //auto_drive_train.turnFor(-180,deg,true);
+
+    auto_drive_train.driveFor(reverse,200,mm,true);
+
+    topmotor.setVelocity(50, percent);
+
+    topmotor.spinFor(5,seconds);
+
+    auto_drive_train.driveFor(forward,257,mm,true);
 
 
 
@@ -185,49 +211,24 @@ void usercontrol(void) {
   //calls the CallBackSetup function to setup the button callbacks
   CallBackSetup();
 
-    right_motor_back.setReversed(true);
-    right_motor_front.setReversed(true);
+  //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  autonomous();
+  //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // User control code here, inside the loop
-    //left motor, right motor, wheel travel aka wheel circumference, track width aka distance between left and right wheels
-    //,wheel base aka distance between front and rear axles, measurment unit, gear ratio 
-    drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,370,310,mm,1);
-
-    //sets the drive trains velocity in percent 
-    auto_drive_train.setDriveVelocity(50,percent);
-
-    //sets the drive trains stopping type
-    auto_drive_train.setStopping(brake);
-
-    //..........................................................................
-    // Commands for moving autonomusly go here
-    //..........................................................................
-    auto_drive_train.driveFor(forward,1000,mm,true);
-
-    auto_drive_train.turnFor(180,deg,true);
-    //auto_drive_train.turnFor(-180,deg,true);
-
-    auto_drive_train.driveFor(forward,1000,mm,true);
-
-    right_motor_back.setReversed(false);
-    right_motor_front.setReversed(false);
-
-    left_motor_back.setReversed(true);
-    left_motor_front.setReversed(true);
-
     while (1) {
         
-        left_motor_group.setVelocity(Controller1.Axis3.position(), percent);
+        left_motor_group.setVelocity(controller_1.Axis3.position(), percent);
 
-        right_motor_group.setVelocity(Controller1.Axis2.position(), percent);
+        right_motor_group.setVelocity(controller_1.Axis2.position(), percent);
 
 
         topmotor.setVelocity(30, percent);
 
-        if (Controller1.ButtonR1.pressing() == true){
+        if (controller_1.ButtonR1.pressing() == true){
             topmotor.spin(forward);
         }
-        else if(Controller1.ButtonL1.pressing() == true){
+        else if(controller_1.ButtonL1.pressing() == true){
             topmotor.spin(reverse);
         }
         else {
