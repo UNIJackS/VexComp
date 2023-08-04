@@ -253,7 +253,6 @@ int main() {
   // Set up callbacks for autonomous and driver control periods.
 
   // Cute Face ^.^
-  bool blink = false;
   brain_1.Screen.drawImageFromFile("normal.png",0,0);
 
   Competition.autonomous(autonomous);
@@ -264,12 +263,9 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    if (blink) {
-	brain_1.Screen.drawImageFromFile("blink.png",0,0);
-    } else {
-	brain_1.Screen.drawImageFromFile("normal.png",0,0);
-    }
-    blink = !blink;
-    wait(100, msec);
+    brain_1.Screen.drawImageFromFile("normal.png",0,0);
+    wait(1000, msec);
+    brain_1.Screen.drawImageFromFile("blink.png",0,0);
+    wait(100, msec)
   }
 }
