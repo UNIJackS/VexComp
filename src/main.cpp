@@ -71,7 +71,6 @@ void ControllerButtonRightPressed(void){
 
 //Setsup the callback events for each button on the contorller
 //these are the functions that will be called when each button is pressed
-//The functions are in a seperate object which is created from the the class above
 void CallBackSetup(){
     //callback functions for A,B,X and Y buttons
     controller_1.ButtonA.pressed(ControllerButtonAPressed);
@@ -146,7 +145,6 @@ void autonomous(void) {
     //..........................................................................
     // code for moving to score goal
     //..........................................................................
-
     //moves forward to the diagonal tile
     //906 is math perfect but 950 works better
     auto_drive_train.driveFor(forward,950,mm,true);
@@ -169,7 +167,6 @@ void autonomous(void) {
     //..........................................................................
     // code for moving to poll
     //..........................................................................
-
     //reverses to allow for turn    
     auto_drive_train.driveFor(reverse,100,mm,true);
 
@@ -211,15 +208,10 @@ void usercontrol(void) {
   //calls the CallBackSetup function to setup the button callbacks
   CallBackSetup();
 
-  //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //autonomous();
-  //REMOVE IN REAL CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     // User control code here, inside the loop
     while (1) {
         
         left_motor_group.setVelocity(controller_1.Axis3.position(), percent);
-
         right_motor_group.setVelocity(controller_1.Axis2.position(), percent);
 
 
