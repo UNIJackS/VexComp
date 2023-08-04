@@ -247,11 +247,10 @@ int main() {
   while (true) {
     if (blink) { // javascript syntax (no further comment)
 	brain_1.Screen.drawImageFromFile("blink.png",0,0);
-	blink = false;
     } else {
 	brain_1.Screen.drawImageFromFile("normal.png",0,0);
-	blink = true;
     }
+    blink = !blink;
     wait(100, msec);
   }
 }
