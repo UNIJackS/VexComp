@@ -147,20 +147,23 @@ void autonomous(void) {
     //..........................................................................
     //moves forward to the diagonal tile
     //906 is math perfect but 950 works better
-    auto_drive_train.driveFor(forward,950,mm,true);
+    auto_drive_train.driveFor(forward,906,mm,true);
 
     //turns to face the goal
-    auto_drive_train.turnFor(-64.66,deg,true);
+    auto_drive_train.turnFor(-65.66,deg,true);
 
     //reverses to make room for the triball
-    auto_drive_train.driveFor(reverse,150,mm,true);
+    auto_drive_train.driveFor(reverse,100,mm,true);
 
     //pushes the triball off the top
     topmotor.setVelocity(50, percent);
-    topmotor.spinFor(2,seconds);
+    //topmotor.spinFor(2,sec);
+
+    topmotor.spin(forward);
 
     //pushes triball into goal
-    auto_drive_train.driveFor(forward,350,mm,true);
+    auto_drive_train.driveFor(forward,450,mm,true);
+    topmotor.stop();
 
 
 
@@ -168,22 +171,22 @@ void autonomous(void) {
     // code for moving to poll
     //..........................................................................
     //reverses to allow for turn    
-    auto_drive_train.driveFor(reverse,100,mm,true);
+    auto_drive_train.driveFor(reverse,200,mm,true);
 
     //turns the robot to the left face the left
-    auto_drive_train.turnFor(-80.5,deg,true);
+    auto_drive_train.turnFor(-70.5,deg,true);
 
     //drives the robot to the square infront of the bumper
     auto_drive_train.driveFor(forward,1216.55,mm,true);
 
     //reverses to allow for turn 
-    auto_drive_train.driveFor(reverse,100,mm,true);
+    auto_drive_train.driveFor(reverse,200,mm,true);
 
     //turns the robot to face the climb poll
-    auto_drive_train.turnFor(-45,deg,true);
+    auto_drive_train.turnFor(-55.5,deg,true);
 
     //rams the robot into the poll
-    auto_drive_train.driveFor(forward,424,mm,true);
+    auto_drive_train.driveFor(forward,400,mm,true);
 
 
   //vison test code 
@@ -214,7 +217,6 @@ void usercontrol(void) {
         left_motor_group.setVelocity(controller_1.Axis3.position(), percent);
         right_motor_group.setVelocity(controller_1.Axis2.position(), percent);
 
-
         topmotor.setVelocity(75, percent);
 
         if (controller_1.ButtonR1.pressing() == true){
@@ -229,6 +231,10 @@ void usercontrol(void) {
 
         left_motor_group.spin(forward);
         right_motor_group.spin(forward);
+        
+        //brain_1.Screen.drawImageFromFile("normal.png",0,0);
+        //wait(1000, msec);
+        //brain_1.Screen.drawImageFromFile("blink.png",0,0);
         
         
 
@@ -263,9 +269,6 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    brain_1.Screen.drawImageFromFile("normal.png",0,0);
-    wait(1000, msec);
-    brain_1.Screen.drawImageFromFile("blink.png",0,0);
     wait(100, msec);
   }
 }
