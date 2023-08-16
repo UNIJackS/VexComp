@@ -24,16 +24,20 @@ brain brain_1;
 
 
 // Motor definations 
-motor left_motor_back = motor(PORT1, ratio18_1, false);
-motor left_motor_front = motor(PORT2, ratio18_1, false);
-motor right_motor_back = motor(PORT10, ratio18_1, false);
-motor right_motor_front = motor(PORT9, ratio18_1, false);
+motor motor_left_back = motor(PORT1, ratio18_1, false);
+motor motor_left_middle = motor(PORT2, ratio18_1, false);
+motor motor_left_front = motor(PORT3, ratio18_1, false);
 
-motor topmotor = motor(PORT3, ratio18_1, false);
+motor motor_right_back = motor(PORT10, ratio18_1, false);
+motor motor_right_middle = motor(PORT11, ratio18_1, false);
+motor motor_right_front = motor(PORT12, ratio18_1, false);
+
+motor motor_top_conveyor = motor(PORT8, ratio18_1, false);
+motor motor_top_raiser = motor(PORT9, ratio18_1, false);
 
 // Motor group definitons
-motor_group left_motor_group = motor_group(left_motor_back,left_motor_front);
-motor_group right_motor_group = motor_group(right_motor_back,right_motor_front);
+motor_group left_motor_group = motor_group(motor_left_back,motor_left_middle,motor_left_front);
+motor_group right_motor_group = motor_group(motor_right_back,motor_right_middle,motor_right_front);
 
 
 
@@ -103,9 +107,12 @@ void CallBackSetup(){
 
 void pre_auton(void) {
 
-    right_motor_back.setReversed(true);
-    right_motor_front.setReversed(true);
-  
+    // CRITICAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    motor_right_middle.setReversed(true);
+    motor_left_middle.setReversed(true);
+    // CRITICAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //IF THIS IS NOT PRESENT THEN THE GEAR BOX WILL DESTROY ITS SELF
+
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -133,7 +140,7 @@ void autonomous(void) {
     drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,370,310,mm,1);
 
     //sets the drive trains velocity in percent 
-    auto_drive_train.setDriveVelocity(70,percent);
+    auto_drive_train.setDriveVelocity(10,percent);
 
     //sets the drive trains stopping type
     auto_drive_train.setStopping(brake);
@@ -156,14 +163,14 @@ void autonomous(void) {
     auto_drive_train.driveFor(reverse,100,mm,true);
 
     //pushes the triball off the top
-    topmotor.setVelocity(50, percent);
+    motor_top_conveyor.setVelocity(50, percent);
     //topmotor.spinFor(2,sec);
 
-    topmotor.spin(forward);
+    motor_top_conveyor.spin(forward);
 
     //pushes triball into goal
     auto_drive_train.driveFor(forward,450,mm,true);
-    topmotor.stop();
+    motor_top_conveyor.stop();
 
 
 
@@ -212,43 +219,58 @@ void usercontrol(void) {
   CallBackSetup();
 
     // User control code here, inside the loop
-    while (1) {
-        
-        left_motor_group.setVelocity(controller_1.Axis3.position(), percent);
-        right_motor_group.setVelocity(controller_1.Axis2.position(), percent);
-
-        topmotor.setVelocity(75, percent);
-
-        if (controller_1.ButtonR1.pressing() == true){
-            topmotor.spin(forward);
-        }
-        else if(controller_1.ButtonL1.pressing() == true){
-            topmotor.spin(reverse);
-        }
-        else {
-            topmotor.stop();
-        }
-
-        left_motor_group.spin(forward);
-        right_motor_group.spin(forward);
-        
-        //brain_1.Screen.drawImageFromFile("normal.png",0,0);
-        //wait(1000, msec);
-        //brain_1.Screen.drawImageFromFile("blink.png",0,0);
-        
-        
-
+  while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
 
     // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
+
+    //sets the joy stick positons to the left and right motor speeds
+    left_motor_group.setVelocity(controller_1.Axis3.position(), percent);
+    right_motor_group.setVelocity(controller_1.Axis2.position(), percent);
+
+    //spins the motors using the velocity from the joy sticks
+    left_motor_group.spin(forward);
+    right_motor_group.spin(forward);
+
+
+    //sets the velocity for the convayer
+    motor_top_conveyor.setVelocity(75, percent);
+
+    //checks if the top bumpers are being pressed then spins the convayer if they are
+    if (controller_1.ButtonR1.pressing() == true){
+        motor_top_conveyor.spin(forward);
+    }
+    else if(controller_1.ButtonL1.pressing() == true){
+        motor_top_conveyor.spin(reverse);
+    }
+    else {
+        motor_top_conveyor.stop();
+    }
+
+    //sets the speed of the motor that raises the robot
+    motor_top_raiser.setVelocity(30, percent);
+
+    //checks if the bottom bumpers are being pressed then raises or lowers the convayer if they are
+    if (controller_1.ButtonR2.pressing() == true){
+        motor_top_raiser.spin(forward);
+    }
+    else if(controller_1.ButtonL2.pressing() == true){
+        motor_top_raiser.spin(reverse);
+    }
+    else {
+        motor_top_conveyor.stop();
+    }
+
     // ........................................................................
+    
+    //brain_1.Screen.drawImageFromFile("normal.png",0,0);
+    //wait(1000, msec);
+    //brain_1.Screen.drawImageFromFile("blink.png",0,0);
 
     wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
+                  // prevent wasted resources.
   }
 }
 
