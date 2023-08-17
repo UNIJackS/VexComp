@@ -28,12 +28,12 @@ motor motor_left_back = motor(PORT1, ratio18_1, false);
 motor motor_left_middle = motor(PORT2, ratio18_1, false);
 motor motor_left_front = motor(PORT3, ratio18_1, false);
 
-motor motor_right_back = motor(PORT10, ratio18_1, false);
-motor motor_right_middle = motor(PORT11, ratio18_1, false);
-motor motor_right_front = motor(PORT12, ratio18_1, false);
+motor motor_right_back = motor(PORT8, ratio18_1, false);
+motor motor_right_middle = motor(PORT9, ratio18_1, false);
+motor motor_right_front = motor(PORT10, ratio18_1, false);
 
-motor motor_top_conveyor = motor(PORT8, ratio18_1, false);
-motor motor_top_raiser = motor(PORT9, ratio18_1, false);
+motor motor_top_conveyor = motor(PORT20, ratio18_1, false);
+motor motor_top_raiser = motor(PORT19, ratio18_1, false);
 
 // Motor group definitons
 motor_group left_motor_group = motor_group(motor_left_back,motor_left_middle,motor_left_front);
