@@ -26,16 +26,16 @@ brain brain_1;
 
 
 // Motor definations 
-motor motor_left_back = motor(PORT1, ratio18_1, false);
-motor motor_left_middle = motor(PORT2, ratio18_1, false);
-motor motor_left_front = motor(PORT3, ratio18_1, false);
+motor motor_left_back = motor(PORT20, ratio18_1, false);
+motor motor_left_middle = motor(PORT19, ratio18_1, false);
+motor motor_left_front = motor(PORT18, ratio18_1, false);
 
-motor motor_right_back = motor(PORT10, ratio18_1, false);
-motor motor_right_middle = motor(PORT9, ratio18_1, false);
-motor motor_right_front = motor(PORT8, ratio18_1, false);
+motor motor_right_back = motor(PORT11, ratio18_1, false);
+motor motor_right_middle = motor(PORT12, ratio18_1, false);
+motor motor_right_front = motor(PORT13, ratio18_1, false);
 
-motor motor_top_conveyor = motor(PORT20, ratio18_1, false);
-motor motor_top_raiser = motor(PORT19, ratio18_1, false);
+motor motor_top_conveyor = motor(PORT16, ratio18_1, false);
+motor motor_top_raiser = motor(PORT15, ratio18_1, false);
 
 // Motor group definitons
 motor_group left_motor_group = motor_group(motor_left_back,motor_left_middle,motor_left_front);
@@ -115,6 +115,8 @@ void pre_auton(void) {
     motor_right_middle.setReversed(true);
     motor_left_back.setReversed(true);
     motor_left_front.setReversed(true);
+
+    motor_top_raiser.resetPosition();
     // CRITICAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //IF THIS IS NOT PRESENT THEN THE GEAR BOX WILL DESTROY ITS SELF
 
@@ -142,13 +144,17 @@ void autonomous(void) {
     //creates a drive train object for the autonomus phase
     //left motor, right motor, wheel travel aka wheel circumference, track width aka distance between left and right wheels
     //,wheel base aka distance between front and rear axles, measurment unit, gear ratio 
-    drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,370,310,mm,1);
+    drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,370,320,mm,0.42);
 
     //sets the drive trains velocity in percent 
-    auto_drive_train.setDriveVelocity(10,percent);
+    auto_drive_train.setDriveVelocity(100,percent);
 
     //sets the drive trains stopping type
     auto_drive_train.setStopping(brake);
+
+    motor_top_raiser.setVelocity(80, percent);
+
+    motor_top_raiser.setStopping(hold);
 
     //..........................................................................
     // Commands for moving autonomusly go here
@@ -157,49 +163,58 @@ void autonomous(void) {
     //..........................................................................
     // code for moving to score goal
     //..........................................................................
-    //moves forward to the diagonal tile
-    //906 is math perfect but 950 works better
-    auto_drive_train.driveFor(forward,906,mm,true);
+    //moves forward to allow turn
+    auto_drive_train.driveFor(forward,100,mm,true);
 
-    //turns to face the goal
-    auto_drive_train.turnFor(-65.66,deg,true);
+    //turns towards the goal
+    auto_drive_train.turnFor(40,deg,true);
 
-    //reverses to make room for the triball
-    auto_drive_train.driveFor(reverse,100,mm,true);
+    //moves to be inline with the goal
+    auto_drive_train.driveFor(forward,781,mm,true);
 
-    //pushes the triball off the top
-    motor_top_conveyor.setVelocity(50, percent);
-    //topmotor.spinFor(2,sec);
+    //turns the robot to face the goal 
+    auto_drive_train.turnFor(-50,deg,true);
 
-    motor_top_conveyor.spin(forward);
+    //pushes the triball off the top by spinning the top motor
+    motor_top_conveyor.spinFor(2,seconds);
 
-    //pushes triball into goal
-    auto_drive_train.driveFor(forward,450,mm,true);
-    motor_top_conveyor.stop();
-
+    //pushes the tri ball into the goal (142.8 is prefect)
+    auto_drive_train.driveFor(forward,145,mm,true);
 
 
     //..........................................................................
     // code for moving to poll
     //..........................................................................
     //reverses to allow for turn    
-    auto_drive_train.driveFor(reverse,200,mm,true);
+    auto_drive_train.driveFor(reverse,145,mm,true);
 
     //turns the robot to the left face the left
-    auto_drive_train.turnFor(-70.5,deg,true);
+    auto_drive_train.turnFor(-80,deg,true);
+
+    
 
     //drives the robot to the square infront of the bumper
-    auto_drive_train.driveFor(forward,1216.55,mm,true);
+    auto_drive_train.driveFor(forward,1341,mm,false);
+    
+    //loops to allow convayermotor to spin  
+    bool loop = true;
+    while(loop) {
+      // 6300 = 35 * 180 cause i want it to move 180 degrees and the gear ratio is 1 to 35
+      // but i use 6000 insted cause real world is wack :)
+      if(motor_top_raiser.position(degrees) < 6000){
+        //spins the raiser motor till it reaches the desired angle
+          motor_top_raiser.spin(reverse);
+        }
+      // if the movement command is done then it starts to rotate the robot away from the elivation bar
+      if(auto_drive_train.isDone() == false){
+        //tells the drive train to turn 125 degrees cause 45deg + 80deg
+        auto_drive_train.turnFor(125,deg,false);
+      }
+    }
+    
 
-    //reverses to allow for turn 
-    auto_drive_train.driveFor(reverse,200,mm,true);
-
-    //turns the robot to face the climb poll
-    auto_drive_train.turnFor(-55.5,deg,true);
-
-    //rams the robot into the poll
-    auto_drive_train.driveFor(forward,400,mm,true);
-
+    //turns the robot to face away from the climb poll
+    
 
   //vison test code 
   //vision auto_camera = vision(PORT3);
@@ -255,12 +270,14 @@ void usercontrol(void) {
     }
 
     //sets the speed of the motor that raises the robot
-    motor_top_raiser.setVelocity(80., percent);
+    motor_top_raiser.setVelocity(80, percent);
 
     motor_top_raiser.setStopping(hold);
     
     i += 1;
       
+
+    printf("%ideggrees:%f\n",i,motor_top_raiser.position(degrees));
     //checks if the bottom bumpers are being pressed then raises or lowers the convayer if they are
     if (controller_1.ButtonR2.pressing() == true){
         motor_top_raiser.spin(forward);
