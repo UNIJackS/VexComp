@@ -8,6 +8,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
+#include "string"
+
 
 using namespace vex;
 
@@ -28,9 +30,9 @@ motor motor_left_back = motor(PORT1, ratio18_1, false);
 motor motor_left_middle = motor(PORT2, ratio18_1, false);
 motor motor_left_front = motor(PORT3, ratio18_1, false);
 
-motor motor_right_back = motor(PORT8, ratio18_1, false);
+motor motor_right_back = motor(PORT10, ratio18_1, false);
 motor motor_right_middle = motor(PORT9, ratio18_1, false);
-motor motor_right_front = motor(PORT10, ratio18_1, false);
+motor motor_right_front = motor(PORT8, ratio18_1, false);
 
 motor motor_top_conveyor = motor(PORT20, ratio18_1, false);
 motor motor_top_raiser = motor(PORT19, ratio18_1, false);
@@ -40,11 +42,13 @@ motor_group left_motor_group = motor_group(motor_left_back,motor_left_middle,mot
 motor_group right_motor_group = motor_group(motor_right_back,motor_right_middle,motor_right_front);
 
 
+bumper raiser_bumper = bumper(brain_1.ThreeWirePort.A);
 
 
 //-----------A,B,X & Y buttons-----------------------------
 void ControllerButtonAPressed(void){
-	brain_1.Screen.drawImageFromFile("wink.png",0,0);
+	//brain_1.Screen.drawImageFromFile("wink.png",0,0);
+  printf("A button pressed !!!\n");
 };
 void ControllerButtonBPressed(void){
 };
@@ -109,7 +113,8 @@ void pre_auton(void) {
 
     // CRITICAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     motor_right_middle.setReversed(true);
-    motor_left_middle.setReversed(true);
+    motor_left_back.setReversed(true);
+    motor_left_front.setReversed(true);
     // CRITICAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //IF THIS IS NOT PRESENT THEN THE GEAR BOX WILL DESTROY ITS SELF
 
@@ -217,7 +222,7 @@ void autonomous(void) {
 void usercontrol(void) {
   //calls the CallBackSetup function to setup the button callbacks
   CallBackSetup();
-
+  int i = 0;
     // User control code here, inside the loop
   while (1) {
     // This is the main execution loop for the user control program.
@@ -250,17 +255,23 @@ void usercontrol(void) {
     }
 
     //sets the speed of the motor that raises the robot
-    motor_top_raiser.setVelocity(30, percent);
+    motor_top_raiser.setVelocity(80., percent);
 
+    motor_top_raiser.setStopping(hold);
+    
+    i += 1;
+      
     //checks if the bottom bumpers are being pressed then raises or lowers the convayer if they are
     if (controller_1.ButtonR2.pressing() == true){
         motor_top_raiser.spin(forward);
+        
     }
     else if(controller_1.ButtonL2.pressing() == true){
         motor_top_raiser.spin(reverse);
+        
     }
     else {
-        motor_top_conveyor.stop();
+        motor_top_raiser.stop();
     }
 
     // ........................................................................
@@ -281,8 +292,8 @@ int main() {
   // Set up callbacks for autonomous and driver control periods.
 
   // Cute Face ^.^
-  brain_1.Screen.drawImageFromFile("normal.png",0,0);
-
+  //brain_1.Screen.drawImageFromFile("normal.png",0,0);
+  
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
 
