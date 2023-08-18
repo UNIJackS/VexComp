@@ -186,31 +186,31 @@ void autonomous(void) {
     // code for moving to poll
     //..........................................................................
     //reverses to allow for turn    
-    auto_drive_train.driveFor(reverse,145,mm,true);
+    //auto_drive_train.driveFor(reverse,145,mm,true);
 
     //turns the robot to the left face the left
-    auto_drive_train.turnFor(-80,deg,true);
+    //auto_drive_train.turnFor(-80,deg,true);
 
     
 
     //drives the robot to the square infront of the bumper
-    auto_drive_train.driveFor(forward,1341,mm,false);
+    //auto_drive_train.driveFor(forward,1341,mm,false);
     
     //loops to allow convayermotor to spin  
-    bool loop = true;
-    while(loop) {
+    //bool loop = true;
+    //while(loop) {
       // 6300 = 35 * 180 cause i want it to move 180 degrees and the gear ratio is 1 to 35
       // but i use 6000 insted cause real world is wack :)
-      if(motor_top_raiser.position(degrees) < 6000){
+      //if(motor_top_raiser.position(degrees) < 6000){
         //spins the raiser motor till it reaches the desired angle
-          motor_top_raiser.spin(reverse);
-        }
+       //   motor_top_raiser.spin(reverse);
+        //}
       // if the movement command is done then it starts to rotate the robot away from the elivation bar
-      if(auto_drive_train.isDone() == false){
+      //if(auto_drive_train.isDone() == false){
         //tells the drive train to turn 125 degrees cause 45deg + 80deg
-        auto_drive_train.turnFor(125,deg,false);
-      }
-    }
+        //auto_drive_train.turnFor(125,deg,false);
+      //}
+    //}
     
 
     //turns the robot to face away from the climb poll
