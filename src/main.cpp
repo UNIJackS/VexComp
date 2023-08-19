@@ -175,11 +175,14 @@ void autonomous(void) {
     //turns the robot to face the goal 
     auto_drive_train.turnFor(-50,deg,true);
 
+    //moves to be inline with the goal
+    auto_drive_train.driveFor(reverse,200,mm,true);
+
     //pushes the triball off the top by spinning the top motor
     motor_top_conveyor.spinFor(2,seconds);
 
     //pushes the tri ball into the goal (142.8 is prefect)
-    auto_drive_train.driveFor(forward,145,mm,true);
+    auto_drive_train.driveFor(forward,200,mm,true);
 
 
     //..........................................................................
