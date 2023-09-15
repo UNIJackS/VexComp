@@ -3,7 +3,7 @@
 /*    Module:       main.cpp                                                  */
 /*    Author:       10jac                                                     */
 /*    Created:      5/26/2023, 2:55:52 PM                                     */
-/*    Description:  Far side program                                          */
+/*    Description:  Close side program                                        */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
@@ -167,13 +167,13 @@ void autonomous(void) {
     auto_drive_train.driveFor(forward,100,mm,true);
 
     //turns towards the goal
-    auto_drive_train.turnFor(40,deg,true);
+    auto_drive_train.turnFor(-40,deg,true);
 
     //moves to be inline with the goal
     auto_drive_train.driveFor(forward,781,mm,true);
 
     //turns the robot to face the goal 
-    auto_drive_train.turnFor(-50,deg,true);
+    auto_drive_train.turnFor(50,deg,true);
 
     //moves to be inline with the goal
     auto_drive_train.driveFor(reverse,200,mm,true);
