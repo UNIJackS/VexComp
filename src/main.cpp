@@ -3,7 +3,7 @@
 /*    Module:       main.cpp                                                  */
 /*    Author:       10jac                                                     */
 /*    Created:      5/26/2023, 2:55:52 PM                                     */
-/*    Description:  V5 project                                                */
+/*    Description:  Far side program                                          */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
