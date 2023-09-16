@@ -9,8 +9,6 @@
 
 #include "vex.h"
 
-
-
 using namespace vex;
 
 // A global instance of competition
@@ -107,8 +105,8 @@ void CallBackSetup(){
 void pre_auton(void) {
 
     // CRITICAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //motor_left_back.setReversed(true);
-    //motor_left_front.setReversed(true);
+    motor_right_back.setReversed(true);
+    motor_right_front.setReversed(true);
 
     //motor_top_raiser.resetPosition();
     // CRITICAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -141,7 +139,7 @@ void autonomous(void) {
     drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,345,235,mm,1);
 
     //sets the drive trains velocity in percent 
-    auto_drive_train.setDriveVelocity(100,percent);
+    auto_drive_train.setDriveVelocity(80,percent);
 
     //sets the drive trains stopping type
     auto_drive_train.setStopping(brake);
@@ -158,7 +156,7 @@ void autonomous(void) {
     auto_drive_train.driveFor(forward,848,mm,true);
 
     //turns the robot to face the goal 
-    auto_drive_train.turnFor(-45,deg,true);
+    auto_drive_train.turnFor(45,deg,true);
 
     //moves to be inline with the goal
     auto_drive_train.driveFor(forward,300,mm,true);
@@ -168,6 +166,9 @@ void autonomous(void) {
 
     //pushes the tri ball into the goal (142.8 is prefect)
     auto_drive_train.driveFor(forward,300,mm,true);
+
+    //moves to be inline with the goal
+    auto_drive_train.driveFor(reverse,300,mm,true);
 
 
     //..........................................................................
