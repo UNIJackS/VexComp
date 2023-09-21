@@ -312,7 +312,7 @@ int main() {
   // Set up callbacks for autonomous and driver control periods.
 
   // Cute Face ^.^
-  //brain_1.Screen.drawImageFromFile("normal.png",0,0);
+  brain_1.Screen.drawImageFromFile("normal.png",0,0); // added this back just to annoy jack
   //test for commit
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
