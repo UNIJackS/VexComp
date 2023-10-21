@@ -9,6 +9,8 @@
 
 #include "vex.h"
 
+
+
 using namespace vex;
 
 // A global instance of competition
@@ -136,14 +138,13 @@ void autonomous(void) {
     //creates a drive train object for the autonomus phase
     //left motor, right motor, wheel travel aka wheel circumference, track width aka distance between left and right wheels
     //,wheel base aka distance between front and rear axles, measurment unit, gear ratio 
-    drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,345,235,mm,1);
+    drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,314,350,235,mm,1);
 
     //sets the drive trains velocity in percent 
-    auto_drive_train.setDriveVelocity(80,percent);
+    auto_drive_train.setDriveVelocity(40,percent);
 
     //sets the drive trains stopping type
     auto_drive_train.setStopping(brake);
-
 
     //..........................................................................
     // Commands for moving autonomusly go here
@@ -153,22 +154,28 @@ void autonomous(void) {
     // code for moving to score goal
     //..........................................................................
     //moves forward to allow turn
-    auto_drive_train.driveFor(forward,848,mm,true);
+    auto_drive_train.driveFor(forward,800,mm,true);
+
+    //turns towards the goal
+    auto_drive_train.turnFor(90,deg,true);
+
+    //moves to be inline with the goal
+    auto_drive_train.driveFor(forward,700,mm,true);
 
     //turns the robot to face the goal 
-    auto_drive_train.turnFor(45,deg,true);
+    //auto_drive_train.turnFor(50,deg,true);
 
     //moves to be inline with the goal
-    auto_drive_train.driveFor(forward,300,mm,true);
+    //auto_drive_train.driveFor(reverse,250,mm,true);
 
-    //moves to be inline with the goal
-    auto_drive_train.driveFor(reverse,300,mm,true);
+    //pushes the triball off the top by spinning the top motor
+    //motor_top_conveyor.spinFor(3,seconds);
 
     //pushes the tri ball into the goal (142.8 is prefect)
-    auto_drive_train.driveFor(forward,300,mm,true);
+    //auto_drive_train.driveFor(forward,200,mm,true);
 
-    //moves to be inline with the goal
-    auto_drive_train.driveFor(reverse,300,mm,true);
+    //pushes the tri ball into the goal (142.8 is prefect)
+   //auto_drive_train.driveFor(reverse,200,mm,true);
 
 
     //..........................................................................
