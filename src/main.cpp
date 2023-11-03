@@ -112,9 +112,10 @@ void CallBackSetup(){
 void pre_auton(void) {
 
     // CRITICAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    motor_right_back.setReversed(true);
     motor_right_middle.setReversed(true);
-    motor_left_back.setReversed(true);
-    motor_left_front.setReversed(true);
+    motor_right_front.setReversed(true);
+
 
     motor_top_raiser.resetPosition();
     // CRITICAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -164,28 +165,28 @@ void autonomous(void) {
     // code for moving to score goal
     //..........................................................................
     //moves forward to allow turn
-    auto_drive_train.driveFor(forward,100,mm,true);
-
-    //turns towards the goal
-    auto_drive_train.turnFor(-45,deg,true);
-
-    //moves to be inline with the goal
-    auto_drive_train.driveFor(forward,751,mm,true);
-
-    //turns the robot to face the goal 
-    auto_drive_train.turnFor(50,deg,true);
-
-    //moves to be inline with the goal
-    auto_drive_train.driveFor(reverse,100,mm,true);
-
-    //pushes the triball off the top by spinning the top motor
-    motor_top_conveyor.spinFor(2,seconds);
-
-    //pushes the tri ball into the goal (142.8 is prefect)
     auto_drive_train.driveFor(forward,200,mm,true);
 
-    //pushes the tri ball into the goal (142.8 is prefect)
+    //turns towards the goal
+    //auto_drive_train.turnFor(-45,deg,true);
+
+    //moves to be inline with the goal
     auto_drive_train.driveFor(reverse,200,mm,true);
+
+    //turns the robot to face the goal 
+    //auto_drive_train.turnFor(50,deg,true);
+
+    //moves to be inline with the goal
+    //auto_drive_train.driveFor(reverse,100,mm,true);
+
+    //pushes the triball off the top by spinning the top motor
+    //motor_top_conveyor.spinFor(2,seconds);
+
+    //pushes the tri ball into the goal (142.8 is prefect)
+    //auto_drive_train.driveFor(forward,200,mm,true);
+
+    //pushes the tri ball into the goal (142.8 is prefect)
+    //auto_drive_train.driveFor(reverse,200,mm,true);
 
 
     //..........................................................................
