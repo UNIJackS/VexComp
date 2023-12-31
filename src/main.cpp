@@ -7,6 +7,8 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
+// SEE SENIOR TEAM BRANCH FOR FURTHER DOCUMENTATION DETAILS - Jack
+
 #include "vex.h"
 
 
