@@ -151,8 +151,10 @@ void autonomous(void) {
     //creates a drive train object for the autonomus phase
     //left motor, right motor, wheel travel aka wheel circumference, track width aka distance between left and right wheels
     //,wheel base aka distance between front and rear axles, measurment unit, gear ratio 
+  
     //(there is an image on the google doc "Useful documentation" which clearly shows what each of the measurements are)
-    // (https://drive.google.com/drive/folders/1dGPRIYTIAyxXedYHI03IPgMvw8wAKqwD?usp=sharing)
+    // see top of document for link.
+  
     drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,370,320,mm,0.42);
 
     //sets the drive trains velocity in percent 
