@@ -1,31 +1,31 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       10jac                                                     */
+/*    Author:       Jack Scrivener                                            */
 /*    Created:      5/26/2023, 2:55:52 PM                                     */
+/*    Last Updated: 1/1/2024, 11:35 PM                                        */
 /*    Description:  Close side program                                        */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
+// Hi'm Jack and welcome to the vex senior team competitive code.
+// I am almost certainly long gone from Awatapu as you are reading this.
+// I have tried to document the code as best as possible however some parts
+// of the code are messy as they were written at competitions. 
+// There is a Google Drive folder in which I have put documentation i
+// found it useful and you will too hopefully.
+// https://drive.google.com/drive/folders/1dGPRIYTIAyxXedYHI03IPgMvw8wAKqwD?usp=sharing
+
 #include "vex.h"
-
-
 
 using namespace vex;
 
 // A global instance of competition
 competition Competition;
 
-// define your global instances of motors and other devices here
+// Define your global instances of motors and other devices here
 
-// A global instance of vex::controller used for taking inputs from the controller
-controller controller_1 = controller(primary);
-
-// A global instance of vex::brain used for printing to the V5 brain screen
-brain brain_1;
-
-
-// Motor definations 
+// Motor definitions 
 motor motor_left_back = motor(PORT8, ratio18_1, false);
 motor motor_left_middle = motor(PORT9, ratio18_1, false);
 motor motor_left_front = motor(PORT10, ratio18_1, false);
@@ -37,17 +37,23 @@ motor motor_right_front = motor(PORT3, ratio18_1, false);
 motor motor_top_conveyor = motor(PORT6, ratio18_1, false);
 motor motor_top_raiser = motor(PORT5, ratio18_1, false);
 
-// Motor group definitons
+// Motor group definitions
+// These are required for the drive train function later on in the program
 motor_group left_motor_group = motor_group(motor_left_back,motor_left_middle,motor_left_front);
 motor_group right_motor_group = motor_group(motor_right_back,motor_right_middle,motor_right_front);
 
+// A global instance of vex::controller used for taking inputs from the controller
+controller controller_1 = controller(primary);
 
+// A global instance of vex::brain used for printing to the V5 brain screen
+brain brain_1;
+
+// Test code for a bumper limit switch (can be removed)
 bumper raiser_bumper = bumper(brain_1.ThreeWirePort.A);
 
 
 //-----------A,B,X & Y buttons-----------------------------
 void ControllerButtonAPressed(void){
-	//brain_1.Screen.drawImageFromFile("wink.png",0,0);
   printf("A button pressed !!!\n");
 };
 void ControllerButtonBPressed(void){
@@ -77,22 +83,22 @@ void ControllerButtonLeftPressed(void){
 void ControllerButtonRightPressed(void){
 };
 
-//Setsup the callback events for each button on the contorller
+//Setsup the callback events for each button on the controller
 //these are the functions that will be called when each button is pressed
 void CallBackSetup(){
-    //callback functions for A,B,X and Y buttons
+    //callback functions for A, B, X and Y buttons
     controller_1.ButtonA.pressed(ControllerButtonAPressed);
     controller_1.ButtonB.pressed(ControllerButtonBPressed);
     controller_1.ButtonX.pressed(ControllerButtonXPressed);
     controller_1.ButtonY.pressed(ControllerButtonYPressed);
 
-    //callback functions for the bumbpers on the front of the controller
+    //callback functions for the bumpers on the front of the controller
     controller_1.ButtonL1.pressed(ControllerButtonL1Pressed);
     controller_1.ButtonL2.pressed(ControllerButtonL2Pressed);
     controller_1.ButtonR1.pressed(ControllerButtonR1Pressed);
     controller_1.ButtonR2.pressed(ControllerButtonR2Pressed);
 
-    //callback functions for the up,donw,left and right arrow buttons
+    //callback functions for the up, down, left and right arrow buttons
     controller_1.ButtonUp.pressed(ControllerButtonUpPressed);
     controller_1.ButtonDown.pressed(ControllerButtonDownPressed);
     controller_1.ButtonLeft.pressed(ControllerButtonLeftPressed);
@@ -145,6 +151,8 @@ void autonomous(void) {
     //creates a drive train object for the autonomus phase
     //left motor, right motor, wheel travel aka wheel circumference, track width aka distance between left and right wheels
     //,wheel base aka distance between front and rear axles, measurment unit, gear ratio 
+    //(there is an image on the google doc "Useful documentation" which clearly shows what each of the measurements are)
+    // (https://drive.google.com/drive/folders/1dGPRIYTIAyxXedYHI03IPgMvw8wAKqwD?usp=sharing)
     drivetrain auto_drive_train =drivetrain(left_motor_group,right_motor_group,319,370,320,mm,0.42);
 
     //sets the drive trains velocity in percent 
@@ -220,9 +228,9 @@ void autonomous(void) {
     //}
     
 
-    //turns the robot to face away from the climb poll
-    
 
+    
+  // Test code for the camera moduel (can be removed)
   //vison test code 
   //vision auto_camera = vision(PORT3);
   
@@ -253,11 +261,11 @@ void usercontrol(void) {
 
     // ........................................................................
 
-    //sets the joy stick positons to the left and right motor speeds
+    //sets the joy stick positons to the left and right motor group speeds
     left_motor_group.setVelocity(controller_1.Axis3.position(), percent);
     right_motor_group.setVelocity(controller_1.Axis2.position(), percent);
 
-    //spins the motors using the velocity from the joy sticks
+    //Actually makes the motors move using the velocity assigned above
     left_motor_group.spin(forward);
     right_motor_group.spin(forward);
 
